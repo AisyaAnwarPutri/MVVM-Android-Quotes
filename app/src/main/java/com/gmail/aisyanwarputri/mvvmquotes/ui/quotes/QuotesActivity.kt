@@ -18,15 +18,15 @@ class QuotesActivity : AppCompatActivity() {
     }
 
     private fun initializeUi() {
-        // Get the QuotesViewModelFactory with all of it's dependencies constructed
+        // Dapatkan QuotesViewModelFactory dengan semua dependensinya dibangun
         val factory = InjectorUtils.provideQuotesViewModelFactory()
-        // Use ViewModelProviders class to create / get already created QuotesViewModel
-        // for this view (activity)
+        // Gunakan kelas ViewModelProviders untuk membuat / mendapatkan QuotesViewModel yang sudah dibuat
+        // untuk tampilan ini (aktivitas)
         val viewModel = ViewModelProviders.of(this, factory)
             .get(QuotesViewModel::class.java)
 
-        // Observing LiveData from the QuotesViewModel which in turn observes
-        // LiveData from the repository, which observes LiveData from the DAO ☺
+        // Mengamati LiveData dari QuotesViewModel yang pada gilirannya mengamati
+        // LiveData dari repositori, yang mengamati LiveData dari DAO
         viewModel.getQuotes().observe(this, Observer { quotes ->
             val stringBuilder = StringBuilder()
             quotes.forEach { quote ->
@@ -35,7 +35,7 @@ class QuotesActivity : AppCompatActivity() {
             textView_quotes.text = stringBuilder.toString()
         })
 
-        // When button is clicked, instantiate a Quote and add it to DB through the ViewModel
+        // Ketika tombol diklik, instantiate Quote dan tambahkan ke DB melalui ViewModel
         button_add_quote.setOnClickListener {
             val quote = Quote(editText_quote.text.toString(), editText_author.text.toString())
             viewModel.addQuote(quote)
